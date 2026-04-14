@@ -8,6 +8,7 @@ import paho.mqtt.client as mqtt
 MQTT_BROKER = "192.168.1.37"
 MQTT_PORT = 1488
 RELAY_TOPIC = "home/relay"
+HUMIDITY_TOPIC = "home/sensor/humidity"
 
 origins = ["*"]
 
@@ -33,15 +34,23 @@ def root():
     return "GreenHouse API is running"
 
 
-@app.post("/relay/{state}")
-def led(state):
+@app.post("/devices/relay/{state}")
+def relay(state):
 
     if state not in ["0", "1"]:
         raise HTTPException(status_code=400, detail="State must be 0 or 1")
 
-    result = mqtt_client.publish(MQTT_TOPIC, state)
+    result = mqtt_client.publish(RELAY_TOPIC, state)
 
     if result.rc == mqtt.MQTT_ERR_SUCCESS:
         return {"status": "success", "sent_state": state}
     else:
         raise HTTPException(status_code=500, detail="Failed to send MQTT message")
+
+
+@app.get("/sensors/humidity/")
+def humidity():
+    mqtt_client.subscribe(HUMIDITY_TOPIC)
+    response = mqtt_client.user_data_get()
+    mqtt_client.unsubscribe(HUMIDITY_TOPIC)
+    return response
