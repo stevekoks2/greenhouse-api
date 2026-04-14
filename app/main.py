@@ -12,6 +12,11 @@ HUMIDITY_TOPIC = "home/sensor/humidity"
 
 origins = ["*"]
 
+
+def on_message(client, userdata, msg):
+    print(f"Received `{msg.payload.decode()}` from `{msg.topic}` topic")
+
+
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -51,6 +56,6 @@ def relay(state):
 @app.get("/sensors/humidity/")
 def humidity():
     mqtt_client.subscribe(HUMIDITY_TOPIC)
-    response = mqtt_client.user_data_get()
+    mqtt_client.on_message = on_message
     mqtt_client.unsubscribe(HUMIDITY_TOPIC)
-    return response
+    return True
