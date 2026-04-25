@@ -9,15 +9,15 @@ app = FastAPI(title="GreenHouse API")
 MQTT_BROKER = "192.168.1.37"
 MQTT_PORT = 1488
 
-DEVICE_RELAY_TOPIC = "/device/relay/"
-DEVICE_AIR_TOPIC = "/device/air/"
-DEVICE_SHINE_TOPIC = "/device/shine/"
+DEVICE_RELAY_TOPIC = "/device/relay"
+DEVICE_AIR_TOPIC = "/device/air"
+DEVICE_SHINE_TOPIC = "/device/shine"
 
-SENSOR_HUMIDITY_TOPIC = "/sensor/humidity/"
-SENSOR_TEMPERATURE_TOPIC = "/sensor/temperature/"
-SENSOR_SHINE_TOPIC = "/sensor/shine/"
+SENSOR_HUMIDITY_TOPIC = "/sensor/humidity"
+SENSOR_TEMPERATURE_TOPIC = "/sensor/temperature"
+SENSOR_SHINE_TOPIC = "/sensor/shine"
 SENSOR_WATER_LEVEL_TOPIC = "/sensor/water_lvl"
-STATS = "/statistic/"
+STATS = "/statistic"
 
 
 origins = ["*"]
